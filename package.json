@@ -13,6 +13,7 @@
   "keywords": [],
   "author": "Lambda School",
   "license": "ISC",
+  "eslint.packageManager": "yarn",
   "bugs": {
     "url": "https://github.com/LambdaSchool/node-express-mini/issues"
   },
@@ -21,6 +22,7 @@
     "nodemon": "^1.18.1"
   },
   "dependencies": {
+    "express": "^4.16.3",
     "knex": "^0.15.0",
     "sqlite3": "^4.0.1"
   }
