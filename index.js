@@ -15,15 +15,17 @@ server.get("/", (req, res) => {
 });
 
 server.get("/api/users", (req, res) => {
-  const users = db.find();
-  users
+  const getUsers = db.find();
+
+  getUsers
     .then(users => res.status(200).json(users));
 });
 
 server.get("/api/users/:id", (req, res) => {
   const { id } = req.params;
-  const user = db.findById(id);
-  user
+  const getUser = db.findById(id);
+
+  getUser
     .then(user => res.status(200).json(user));
 });
 
@@ -37,13 +39,10 @@ server.post("/api/users", (req, res) => {
   if (!req.body.name || !req.body.bio) {
     return res
       .status(400)
-      .json({errorMessage: 'Please provide name and bio for the user.'})
+      .json({ errorMessage: "Please provide name and bio for the user." })
   }
 
-  const addUser = db.insert({
-    ...user,
-    ...dates,
-  });
+  const addUser = db.insert({...user, ...dates});
 
   addUser
     .then(id => res.status(201).json(id))
