@@ -3,11 +3,11 @@ const helmet = require("helmet");
 const db = require("./data/db");
 
 const server = express();
-express.json();
 const PORT = 8000;
 
 // Middleware
 server.use(helmet());
+server.use(express.json());
 
 // API endpoints
 server.get("/", (req, res) => {
@@ -25,6 +25,29 @@ server.get("/api/users/:id", (req, res) => {
   const user = db.findById(id);
   user
     .then(user => res.status(200).json(user));
+});
+
+server.post("/api/users", (req, res) => {
+  const user = req.body;
+  const dates = {
+    created_at: Date.now(),
+    updated_at: Date.now(),
+  }
+
+  if (!req.body.name || !req.body.bio) {
+    return res
+      .status(400)
+      .json({errorMessage: 'Please provide name and bio for the user.'})
+  }
+
+  const addUser = db.insert({
+    ...user,
+    ...dates,
+  });
+
+  addUser
+    .then(id => res.status(201).json(id))
+    .catch(err => console.error(err));
 });
 
 // Server listening on port (const PORT) above
