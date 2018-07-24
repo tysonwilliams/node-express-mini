@@ -58,10 +58,21 @@ server.put("/api/users/:id", (req, res) => {
     updated_at: Date.now(),
   }
   const updateUser = db.update(id, {...user, ...dates});
-  
+
   updateUser
     .then(updatedUser => res.status(200).json(updatedUser))
     .catch(err => console.error(err));
+});
+
+server.delete("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  const deleteUser = db.remove(id);
+
+  deleteUser
+    .then(numberDeleted => res.json(numberDeleted))
+    .catch(err => {
+      res.status(500).json({ error: "The user could not be removed" });
+    });
 });
 
 // Server listening on port (const PORT) above
