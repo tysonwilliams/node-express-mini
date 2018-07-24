@@ -50,5 +50,19 @@ server.post("/api/users", (req, res) => {
     .catch(err => console.error(err));
 });
 
+server.put("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  const user = req.body;
+  const dates = {
+    created_at: Date.now(),
+    updated_at: Date.now(),
+  }
+  const updateUser = db.update(id, {...user, ...dates});
+  
+  updateUser
+    .then(updatedUser => res.status(200).json(updatedUser))
+    .catch(err => console.error(err));
+});
+
 // Server listening on port (const PORT) above
 server.listen(PORT, () => console.log("Server running on PORT: " + PORT));
